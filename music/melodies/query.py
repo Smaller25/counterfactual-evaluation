@@ -15,7 +15,7 @@ def get_output_file(exp_dir, model, chain_of_thought, is_control):
     control_str = '_control' if is_control else ''
 
     # for palm
-    model = model.replace('models/', '')
+    model = model.replace('models/', '').replace('/', '_')
     
     output_file = os.path.join(output_dir, f'{model}{cot_str}{control_str}.txt')
     return output_file

@@ -170,7 +170,7 @@ readable_name = {
     "gpt-4-0314": "gpt4",
     "gpt-3.5-turbo-0301": "gpt3.5",
     "claude-v1.3": "claude",
-    "models/text-bison-001": "palm2",
+    "text-bison-001": "palm2",
 }
 
 
@@ -178,12 +178,14 @@ def main():
     for exp in os.listdir("chess/output"):
         if "chess" not in exp:
             continue
-        for model_name in ["gpt-4-0314", "gpt-3.5-turbo-0301", "claude-v1.3", "models/text-bison-001"]:
+        # evaluate every model that has an output directory (named "{model}_0cot{True,False}")
+        model_names = sorted({d.rsplit("_0cot", 1)[0] for d in os.listdir(f"chess/output/{exp}") if "_0cot" in d})
+        for model_name in model_names:
             for cot in [True, False]:
-                output_dir = f"chess/output/{exp}/{model_name.replace('models/', '')}_0cot{cot}"
+                output_dir = f"chess/output/{exp}/{model_name}_0cot{cot}"
                 if not os.path.exists(output_dir):
                     continue
-                print("="*25, exp, readable_name[model_name], f"cot = {cot}", "="*25)
+                print("="*25, exp, readable_name.get(model_name, model_name), f"cot = {cot}", "="*25)
 
                 for mode in ["real_world", "counter_factual"]:
                     # control

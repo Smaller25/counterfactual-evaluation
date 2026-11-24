@@ -55,7 +55,7 @@ def main(model_name: str = "gpt-4-0314", cot: bool = True):
     for exp in os.listdir("chess/data"):
         if "chess" in exp:
             data_dir = os.path.join("chess/data", exp)
-            output_dir = f"chess/output/{exp}/{model_name.replace('models/', '')}_0cot{cot}"
+            output_dir = f"chess/output/{exp}/{model_name.replace('models/', '').replace('/', '_')}_0cot{cot}"
             pathlib.Path(output_dir).mkdir(parents=True, exist_ok=True)
             for mode in ["real_world", "counter_factual"]:
                 pieces = ["white bishop", "black bishop", "white knight", "black knight"]
